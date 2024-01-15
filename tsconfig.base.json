@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "lib": ["ES6"],
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "experimentalDecorators": true,
+        "sourceMap": true,
+        "outDir": "./build/",
+        "noImplicitAny": false,
+        "typeRoots": ["node_modules/@types", "."],
+        "inlineSources": true,
+        "skipLibCheck": true,
+        "resolveJsonModule": true,
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "declaration": true,
+
+        "types": ["jest", "node"]
+    }
+}

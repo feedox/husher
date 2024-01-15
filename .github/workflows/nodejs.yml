@@ -1,0 +1,42 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Node.js CI
+
+on:
+    push:
+        branches: [main]
+    pull_request:
+        branches: [main]
+
+jobs:
+    build:
+        # NOTE: To enable Github Actions for CI/CD remove 'false' condition 👇
+        if: "false && !contains(github.event.head_commit.message, 'skip-ci')"
+
+        runs-on: ubuntu-latest
+
+        strategy:
+            matrix:
+                node-version: [16.x]
+
+        steps:
+            - uses: actions/checkout@v2
+            # Setup .npmrc file to publish to npm
+            - uses: actions/setup-node@v1
+              with:
+                  node-version: ${{ matrix.node-version }}
+                  registry-url: 'https://registry.npmjs.org'
+                  scope: '@octocat'
+            - run: yarn --frozen-lockfile
+            - run: yarn build
+            - run: yarn test
+            - name: yarn bump
+              if: github.ref == 'refs/heads/main'
+              run: |
+                  git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+                  git config user.name "$GITHUB_ACTOR"
+                  yarn bump
+              env:
+                  # NOTE: Make sure to set up your NPM secret in Github
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
