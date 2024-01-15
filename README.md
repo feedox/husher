@@ -2,7 +2,7 @@
 
 A library to encode text into special unicode characters that are unnoticeable in the UI for are interpretable by LLMs.
 
-<video src='https://github.com/Livshitz/libx.js/assets/246724/f6c22f1d-c60e-435e-8f98-8c893b4243c4'/>
+<video src='https://github.com/Livshitz/libx.js/assets/246724/f6c22f1d-c60e-435e-8f98-8c893b4243c4'></video>
 
 ## Features:
 
