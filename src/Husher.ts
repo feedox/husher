@@ -31,6 +31,10 @@ export class Husher {
         }); //.join('');
         return ret;
     }
+
+    public sanitize(encodedText: string) {
+        return this.dehush(encodedText, true).join('');
+    }
 }
 
 export class ModuleOptions {

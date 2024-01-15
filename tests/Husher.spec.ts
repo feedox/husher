@@ -26,3 +26,12 @@ test('husher.dehush - no separator', async () => {
     // output.split('').map(x=>x.charCodeAt(0))
     expect(output).toEqual(expected);
 });
+
+test('husher.sanitize', async () => {
+    const input = `yo, 󠁨󠁥󠁬󠁬󠁯󠀠󠁷󠁯󠁲󠁬󠁤`;
+    const expected = 'yo, hello world';
+    const output = husher.sanitize(input);
+    expect(output.length).toEqual(15);
+    // output.split('').map(x=>x.charCodeAt(0))
+    expect(output).toEqual(expected);
+});

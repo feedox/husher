@@ -26,11 +26,16 @@ function copyToClipboard(data: any) {
 }
 
 if (params.hush) {
-    console.log(`performing hush`, params.hush)
+    console.log(`performing hush, arguments: `, params.hush)
     const ret = husher.hush(params.hush);
     copyToClipboard(ret);
     console.log(`successfully copied to clipboard ${ret.length} characters`);
     process.exit(0)
+} else if (params.sanitize) {
+    console.log(`performing hush, arguments length`, params.sanitize.length)
+    const ret = husher.sanitize(params.sanitize);
+    console.log(`output length: ${ret.length}. output:`);
+    console.log(ret);
 } else {
     console.error('unrecognized command!', params);
 }
