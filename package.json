@@ -1,7 +1,7 @@
 {
     "name": "husher",
     "version": "0.1.4",
-    "main": "index.js",
+    "main": "./build/Husher.js",
     "license": "MIT",
     "author": "feedox",
     "scripts": {
