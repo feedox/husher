@@ -7,13 +7,13 @@ export class Husher {
     }
 
     public setSeparator() {
-        this.separator = String.fromCharCode(this.options.sepCode + this.options.offset + this.options.lowSurrogateOffset);
+        this.separator = String.fromCharCode(this.options.sepCode + this.options.lowSMPA + this.options.highSurrogateOffset);
     }
 
     public hush(clearTest: string) {
         let ret = this.separator;
         ret += clearTest.split('').map(i => {
-            const tmp = i.charCodeAt(0) + this.options.offset + this.options.lowSurrogateOffset;
+            const tmp = i.charCodeAt(0) + this.options.lowSMPA + this.options.highSurrogateOffset;
             return String.fromCharCode(tmp);
         }).join(this.separator);
 
@@ -21,27 +21,39 @@ export class Husher {
     }
 
     public dehush(encodedText: string, skipSeparator = false) {
-        const charCodes = encodedText.split('').map(i => i.charCodeAt(0));
-        const ret = charCodes.map(x => {
-            let c = x - this.options.offset - this.options.lowSurrogateOffset;
-            if (x < this.options.highSurrogateBase) c = x; // don't offset normal chars
-            const ret = String.fromCharCode(c);
-            if (skipSeparator && ret.charCodeAt(0) == this.options.sepCode) return '';
-            return ret;
-        }); //.join('');
+        const chars = Array.from(encodedText);
+
+        const ret = chars.map(char => {
+            let part = char.charCodeAt(0);
+            if (part >= this.options.lowSurrogateBase) { // has surrogate in SMPA
+                const payload = char.charCodeAt(1);
+                const deciphered = payload - this.options.highSurrogateOffset;
+                if (skipSeparator) char = String.fromCharCode(deciphered);
+                else char = String.fromCharCode(this.options.sepCode, deciphered);
+            }
+
+            if (skipSeparator && part == this.options.sepCode) return '';
+            return char;
+        });
         return ret;
     }
 
     public sanitize(encodedText: string) {
         return this.dehush(encodedText, true).join('');
     }
+
+    private isSMPA(char) {
+        const codePoint = char.codePointAt(0);
+        return codePoint >= this.options.lowSMPA && codePoint <= this.options.highSMPA;
+    }
 }
 
 export class ModuleOptions {
-    highSurrogateBase = 0xDB40;
-    lowSurrogateOffset = 0xDC00; // 56320
-    offset = 0xE0000; // 917504
-    sepCode = 0xff40; //65344
+    lowSurrogateBase = 0xDB40; // 56128
+    highSurrogateOffset = 0xDC00; // 56320
+    lowSMPA = 0xE0000; // 917504
+    highSMPA = 0xE0FFF; // 921599
+    sepCode = 0xff40; // 65344
 }
 
 export const husher = new Husher();

@@ -1,6 +1,6 @@
 {
     "name": "husher",
-    "version": "0.1.5",
+    "version": "0.2.0",
     "main": "./build/Husher.js",
     "license": "MIT",
     "author": "feedox",
