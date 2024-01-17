@@ -32,8 +32,8 @@ You can also play with the [online tool](https://lab.feedox.com/wild-llma/husher
 
 ## Credits:
 
-The credit for discovering the effects of this technique was discovered by 
-[@goodside](https://twitter.com/goodside/status/1746685366952735034)
+The credit for uncovering the impacts of this method goes to 
+[@goodside](https://twitter.com/goodside/status/1746685366952735034). Make sure to follow up.
 <img width="585" alt="image" src="https://github.com/Livshitz/libx.js/assets/246724/8664fde0-98ba-4b7b-a891-e382bf983644">
 
 
