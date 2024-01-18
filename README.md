@@ -27,7 +27,7 @@ encode:
 `npm install husher`
 
 #### online tool:  
-You can also play with the [online tool](https://lab.feedox.com/wild-llma/husher).
+You can also play with the [online tool](https://lab.feedox.com/wild-llama/husher).
 
 
 ## Credits:
