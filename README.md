@@ -31,8 +31,8 @@ encode:
 `yarn install husher`
 `npm install husher`
 
-#### online tool:  
-You can also play with the [online tool](https://lab.feedox.com/wild-llama/husher).
+#### interactive demonstration tool:  
+You can also play with the [online tool](https://lab.feedox.com/wild-llama/husher) which performs hush/dehush operations on client-side.
 
 
 ## Credits:
