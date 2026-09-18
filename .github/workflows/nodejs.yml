@@ -35,9 +35,7 @@ jobs:
             - run: yarn build
             - run: yarn test
             - name: Pull NPM_TOKEN from bodify secrets store
-              # TEMP(verify-rotation): also run on this PR so the rotated BODIFY_API_KEY is proven at the
-              # real surface. Reverted in the next commit — `yarn bump` stays main-only throughout.
-              if: github.ref == 'refs/heads/main' || github.event_name == 'pull_request'
+              if: github.ref == 'refs/heads/main'
               # The npm token is NOT a per-repo secret — a repo-scoped NPM_TOKEN goes stale silently and every
               # publish then dies on a 404. Pull the canonical token from bodify at publish time, so rotating it
               # in ONE place fixes every repo. Only GitHub secret needed: BODIFY_API_KEY.
