@@ -18,7 +18,10 @@ jobs:
 
         strategy:
             matrix:
-                node-version: [16.x]
+                # Node 16 has been dead here since 2026-08-24: `yarn --frozen-lockfile` aborts on
+                # node-releases@2.0.53, which declares engines node>=18. CI never even reached the
+                # publish steps. 20.x is the current LTS the rest of the fleet builds on.
+                node-version: [20.x]
 
         steps:
             - uses: actions/checkout@v2
@@ -32,7 +35,9 @@ jobs:
             - run: yarn build
             - run: yarn test
             - name: Pull NPM_TOKEN from bodify secrets store
-              if: github.ref == 'refs/heads/main'
+              # TEMP(verify-rotation): also run on this PR so the rotated BODIFY_API_KEY is proven at the
+              # real surface. Reverted in the next commit — `yarn bump` stays main-only throughout.
+              if: github.ref == 'refs/heads/main' || github.event_name == 'pull_request'
               # The npm token is NOT a per-repo secret — a repo-scoped NPM_TOKEN goes stale silently and every
               # publish then dies on a 404. Pull the canonical token from bodify at publish time, so rotating it
               # in ONE place fixes every repo. Only GitHub secret needed: BODIFY_API_KEY.
