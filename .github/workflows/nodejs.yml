@@ -18,7 +18,10 @@ jobs:
 
         strategy:
             matrix:
-                node-version: [16.x]
+                # Node 16 has been dead here since 2026-08-24: `yarn --frozen-lockfile` aborts on
+                # node-releases@2.0.53, which declares engines node>=18. CI never even reached the
+                # publish steps. 20.x is the current LTS the rest of the fleet builds on.
+                node-version: [20.x]
 
         steps:
             - uses: actions/checkout@v2
